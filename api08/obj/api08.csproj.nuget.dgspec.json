@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\homework\\api08\\api08.csproj": {}
+    "C:\\Projects\\homework_dotNetCore3\\api08\\api08.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\homework\\api08\\api08.csproj": {
+    "C:\\Projects\\homework_dotNetCore3\\api08\\api08.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\homework\\api08\\api08.csproj",
+        "projectUniqueName": "C:\\Projects\\homework_dotNetCore3\\api08\\api08.csproj",
         "projectName": "api08",
-        "projectPath": "C:\\Projects\\homework\\api08\\api08.csproj",
+        "projectPath": "C:\\Projects\\homework_dotNetCore3\\api08\\api08.csproj",
         "packagesPath": "C:\\Users\\陳信宏\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\homework\\api08\\obj\\",
+        "outputPath": "C:\\Projects\\homework_dotNetCore3\\api08\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -42,9 +42,21 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.7, )"
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.6, )"
             }
           },
           "imports": [
