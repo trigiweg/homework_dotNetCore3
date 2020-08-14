@@ -105,5 +105,17 @@ namespace api08.Controllers
         {
             return _context.Course.Any(e => e.CourseId == id);
         }
+
+        [HttpGet("~/api/courseStudents")]
+        public async Task<ActionResult<IEnumerable<VwCourseStudents>>> GetCourseStudents()
+        {
+            return await _context.VwCourseStudents.ToListAsync();
+        }
+
+        [HttpGet("~/api/courseStudentCount")]
+        public async Task<ActionResult<IEnumerable<VwCourseStudentCount>>> GetCourseStudentCount()
+        {
+            return await _context.VwCourseStudentCount.ToListAsync();
+        }
     }
 }
