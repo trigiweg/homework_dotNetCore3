@@ -52,6 +52,7 @@ namespace api08.Controllers
                 return BadRequest();
             }
 
+            
             _context.Entry(course).State = EntityState.Modified;
 
             try
@@ -104,6 +105,18 @@ namespace api08.Controllers
         private bool CourseExists(int id)
         {
             return _context.Course.Any(e => e.CourseId == id);
+        }
+
+        [HttpGet("~/api/courseStudents")]
+        public async Task<ActionResult<IEnumerable<VwCourseStudents>>> GetCourseStudents()
+        {
+            return await _context.VwCourseStudents.ToListAsync();
+        }
+
+        [HttpGet("~/api/courseStudentCount")]
+        public async Task<ActionResult<IEnumerable<VwCourseStudentCount>>> GetCourseStudentCount()
+        {
+            return await _context.VwCourseStudentCount.ToListAsync();
         }
     }
 }

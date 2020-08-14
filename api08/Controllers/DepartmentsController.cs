@@ -52,7 +52,8 @@ namespace api08.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(department).State = EntityState.Modified;
+
+            await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC [dbo].[Department_Update] { department.DepartmentId }, { department.Name }, { department.Budget },  { department.StartDate }, { department.InstructorId }, { department.RowVersion }");
 
             try
             {
@@ -77,10 +78,18 @@ namespace api08.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Department>> PostDepartment(Department department)
+        public ActionResult<Department> PostDepartment(Department department)
         {
-            _context.Department.Add(department);
-            await _context.SaveChangesAsync();
+            // _context.Department.Add(department);
+            // await _context.SaveChangesAsync();
+
+            var result = _context.Department.FromSqlInterpolated($"EXECUTE dbo.Department_Insert {department.Name},{department.Budget},{department.StartDate},{department.InstructorId}")
+                .Select(x => new Department() { DepartmentId = x.DepartmentId })
+                .AsEnumerable()
+                .FirstOrDefault();
+
+            department.DepartmentId = result.DepartmentId;
+
 
             return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
         }
@@ -95,7 +104,9 @@ namespace api08.Controllers
                 return NotFound();
             }
 
-            _context.Department.Remove(department);
+            // _context.Department.Remove(department);
+
+            await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC [dbo].[Department_Delete] {department.DepartmentId}, {department.RowVersion}");
             await _context.SaveChangesAsync();
 
             return department;
@@ -105,5 +116,13 @@ namespace api08.Controllers
         {
             return _context.Department.Any(e => e.DepartmentId == id);
         }
+
+        [HttpGet("~/api/departmentCourseCount")]
+        public async Task<ActionResult<IEnumerable<VwDepartmentCourseCount>>> GetDepartmentCourseCount()
+        {
+            return await _context.VwDepartmentCourseCount.FromSqlRaw($"SELECT * FROM [dbo].[vwDepartmentCourseCount]").ToListAsync();
+        }
+
+
     }
 }
